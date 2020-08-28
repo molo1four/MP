@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kurri_black"
+                android:gravity="center"
+                android:text="MoviePlus"
+                android:textColor="#402CF3"
+                android:textSize="50sp" />
+
+            <EditText
+                android:id="@+id/editEmail_Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:ems="10"
+                android:fontFamily="@font/kurri_black"
+                android:hint="E-mail"
+                android:inputType="textPersonName"
+                android:textSize="30dp"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="161dp" />
+
+            <EditText
+                android:id="@+id/editPw_Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:ems="10"
+                android:fontFamily="@font/kurri_black"
+                android:hint="Password"
+                android:inputType="textPersonName"
+                android:textSize="30dp"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="342dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox_autoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/kurri_black_adapt"
+                android:text="auto_login" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="#B75523B1"
+                android:fontFamily="@font/kurri_black"
+                android:text="LOGIN"
+                android:textSize="30dp" />
+
+            <Button
+                android:id="@+id/btnSignuUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="#B75523B1"
+                android:fontFamily="@font/kurri_black"
+                android:text="Sign Up"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
