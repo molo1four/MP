@@ -27,6 +27,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //멥버변수 셋팅
     Context context;
     ArrayList<Movies> moviesArrayList;
+    String str ;
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public String getI() {
+        return str;
+    }
+
+    public void setI(String i) {
+        this.str = i;
+    }
 
     public void setMoviesArrayList(ArrayList<Movies> moviesArrayList) {
         this.moviesArrayList = moviesArrayList;
@@ -66,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if(isChecked){
                     holder.switch1.setChecked(true);
                     movies.setChecked(true);
-                    Log.i("777",""+moviesArrayList.get(10).isChecked()+"      ///     "+position);
+//                    Log.i("777",""+moviesArrayList.get(10).isChecked()+"      ///     "+position);
                 }else{
                     holder.switch1.setChecked(false);
                     movies.setChecked(false);
@@ -78,6 +95,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.switch1.setChecked(true);
         } else {
             holder.switch1.setChecked(false);
+        }
+        if (str == null){
+            str="";
+        }
+        if (str.equals("i")){
+            holder.switch1.setChecked(true);
         }
     }
 

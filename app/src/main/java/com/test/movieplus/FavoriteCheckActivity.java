@@ -204,7 +204,7 @@ public class FavoriteCheckActivity extends AppCompatActivity {
                                         String photo_url = jsonObject.getString("poster_path");
                                         Movies movies = new Movies(movie_id,title,year,photo_url);
                                         moviesArrayList.add(movies);
-                                        Log.i("ssibal",""+movie_id);
+                                        Log.i("imok",""+movie_id);
 
 
                                     }
