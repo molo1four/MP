@@ -102,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            Intent i = new Intent(SignUpActivity.this, FavoriteCheckActivity.class);
+                            Intent i = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                         } catch (Exception e) {
