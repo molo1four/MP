@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MovieFragment">
+
+    <ImageView
+        android:id="@+id/imgBackdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtFragTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textSize="40sp" />
+
+        <ImageView
+            android:id="@+id/imgPoster"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/txtFragYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="year"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/txtFragCnt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이 영화를 유저들이 좋아한 갯수 : "
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtFragDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="영화설명"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+</FrameLayout>
