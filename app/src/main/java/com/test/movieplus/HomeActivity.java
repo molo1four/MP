@@ -1,10 +1,13 @@
 package com.test.movieplus;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -12,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView navigationView;
-
     FirstFragment firstFragment;
     SecondFragment secondFragment;
     ThirdFragment thirdFragment;
@@ -61,5 +63,11 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_overflow, menu);
+        return true;
     }
 }
