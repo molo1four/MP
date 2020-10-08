@@ -2,17 +2,20 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/app_bar_search"
+        android:id="@+id/mitem_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="Search"
-        app:showAsAction="always"
-        app:actionViewClass="android.widget.SearchView" />
+        android:title="Item"
+        app:showAsAction="always" />
     <item
+        android:id="@+id/mitem_reset"
         android:title="좋아요 목록 초기화"
         app:showAsAction="never" />
     <item
+        android:id="@+id/mitem_logout"
         android:title="로그아웃"
         app:showAsAction="never" />
-    <item android:title="회원탈퇴"
-        app:showAsAction="never"/>
+    <item
+        android:id="@+id/mitem_withdrawal"
+        android:title="회원탈퇴"
+        app:showAsAction="never" />
 </menu>
