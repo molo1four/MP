@@ -1,13 +1,53 @@
 package com.test.movieplus.model;
 
-public class Movies {
+import java.io.Serializable;
+
+public class Movies implements Serializable {
 
     private int id;
     private String title;
     private String year;
+    private String overview;
     private String photo_url;
+    private String backdrop_url;
     private boolean isChecked;
 
+    public Movies(int id, String title, String year, String overview, String photo_url, String backdrop_url, boolean isChecked) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.overview = overview;
+        this.photo_url = photo_url;
+        this.backdrop_url = backdrop_url;
+        this.isChecked = isChecked;
+    }
+
+    public Movies(int id, String title, String year, String overview, String photo_url, String backdrop_url) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.overview = overview;
+        this.photo_url = photo_url;
+        this.backdrop_url = backdrop_url;
+    }
+
+
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getBackdrop_url() {
+        return backdrop_url;
+    }
+
+    public void setBackdrop_url(String backdrop_url) {
+        this.backdrop_url = backdrop_url;
+    }
 
     public Movies(int id, String title, String year, String photo_url, boolean isChecked) {
         this.id = id;

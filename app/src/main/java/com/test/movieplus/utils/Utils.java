@@ -9,6 +9,7 @@ public static final String PATH_GETLIKED = "api/v1/movies/getLiked";
 public static final String PATH_GETMOVIES_NY = "api/v1/movies/getMovies_ny";
 public static final String PATH_GETRECOM = "api/v1/movies/getRecom";
 public static final String PATH_GETRECOM_AR = "api/v1/movies/getRecom_AR";
+public static final String PATH_SEARCHMOVIES = "api/v1/movies/searchMovies";
 public static final String PATH_ADDLIKES = "api/v1/movies";
 public static final String PATH_LOGIN = "api/v1/users/login";
 public static final String PATH_SIGNUP = "api/v1/users/";
