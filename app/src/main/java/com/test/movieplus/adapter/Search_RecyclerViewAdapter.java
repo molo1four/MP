@@ -2,6 +2,7 @@ package com.test.movieplus.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,7 +101,11 @@ public class Search_RecyclerViewAdapter extends RecyclerView.Adapter<Search_Recy
             txtYear = itemView.findViewById(R.id.textYear);
             txtOverview = itemView.findViewById(R.id.txtOverview);
             imgUrl = itemView.findViewById(R.id.imgUrl);
+
             cardView = itemView.findViewById(R.id.cardView);
+            cardView.setCardBackgroundColor(Color.TRANSPARENT);
+            cardView.setCardElevation(0);
+
             imgUrl.setAdjustViewBounds(true);
 
             cardView.setOnClickListener(new View.OnClickListener() {

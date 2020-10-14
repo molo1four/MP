@@ -11,12 +11,8 @@
         android:id="@+id/imgBackdrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,8 +23,11 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/kurri"
                 android:gravity="center"
-                android:text="제목" />
+                android:text="제목"
+                android:textColor="#FFFFFF"
+                android:textSize="40dp" />
 
             <ImageView
                 android:id="@+id/imgPoster"
@@ -41,24 +40,21 @@
                 android:id="@+id/txtYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/kurri"
                 android:gravity="center"
-                android:text="개봉년도" />
-
-            <TextView
-                android:id="@+id/txtCnt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="유저들이 좋아한 수" />
+                android:text="개봉년도"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/txtOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/kurri"
                 android:gravity="center"
-                android:text="영화설명" />
+                android:text="영화설명"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp" />
         </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

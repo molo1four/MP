@@ -19,6 +19,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.test.movieplus.utils.Utils;
 
 import org.json.JSONObject;
@@ -26,7 +31,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
-
+    private AdView mAdView;
     TextView txtLogo;
     EditText editEmail_Login;
     EditText editPw_Login;
@@ -38,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         txtLogo = findViewById(R.id.txtLogo);
         editEmail_Login = findViewById(R.id.editEmail_Login);

@@ -68,6 +68,11 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(pw.equals(pw2) == false){
                     Toast.makeText(SignUpActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(pw.length() < 4 && pw2.length() < 4){
+                    Toast.makeText(SignUpActivity.this,"비밀번호는 4자 이상이여야 합니다.",Toast.LENGTH_SHORT).show();
                 }
                 
                 SignUp();
@@ -113,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+            Log.i("plzerror", ""+error);
             }
         }){
             // 발리 에러 시 헤더에 추가할 부분

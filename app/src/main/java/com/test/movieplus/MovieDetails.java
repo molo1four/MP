@@ -30,9 +30,9 @@ public class MovieDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
+
         txtTitle = findViewById(R.id.txtTitle);
         txtYear = findViewById(R.id.txtYear);
-        txtCnt = findViewById(R.id.txtCnt);
         txtOverview = findViewById(R.id.txtOverview);
         imgPoster = findViewById(R.id.imgPoster);
         imgBackdrop = findViewById(R.id.imgBackdrop);
@@ -46,10 +46,10 @@ public class MovieDetails extends AppCompatActivity {
         title = movies.getTitle();
         year = movies.getYear();
         overview = movies.getOverview();
-        Log.i("iii", Utils.BASE_IMG_URL + movies.getBackdrop_url());
-//        GlideUrl glideUrl = new GlideUrl( Utils.BASE_IMG_URL + movies.getPhoto_url(),new LazyHeaders.Builder().addHeader("User-Agent","Your-User-Agent").build());
-//        Glide.with(MovieDetails.this).load(glideUrl).into(imgPoster);
 
+        GlideUrl glideUrl = new GlideUrl( Utils.BASE_IMG_URL + movies.getPhoto_url(),new LazyHeaders.Builder().addHeader("User-Agent","Your-User-Agent").build());
+        Glide.with(MovieDetails.this).load(glideUrl).into(imgPoster);
+        Log.i("iii", Utils.BASE_IMG_URL + movies.getBackdrop_url());
         GlideUrl glideUrl1 = new GlideUrl( Utils.BASE_IMG_URL + movies.getBackdrop_url(),new LazyHeaders.Builder().addHeader("User-Agent","Your-User-Agent").build());
         Glide.with(MovieDetails.this).load(glideUrl1).into(imgBackdrop);
 
