@@ -124,6 +124,14 @@ public class HomeActivity extends AppCompatActivity {
         if(id == R.id.mitem_logout){
                     url = Utils.BASE_URL + Utils.PATH_LOGOUT;
             addNetworkData_Logout(url);
+            SharedPreferences sp = getSharedPreferences(Utils.PREFERENCES_NAME,MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("token",null);
+            editor.putBoolean("cb",false);
+            editor.apply();
+            Intent i = new Intent(HomeActivity.this,MainActivity.class);
+            startActivity(i);
+            finish();
         }
         if(id == R.id.mitem_withdrawal){
                     url = Utils.BASE_URL + Utils.PATH_WITHDRAWAL;
@@ -190,7 +198,6 @@ public class HomeActivity extends AppCompatActivity {
                                     success = response.getBoolean("success");
                                     if(success == false){
                                         Toast.makeText(HomeActivity.this,"처리실패",Toast.LENGTH_LONG).show();
-
                                     }
                                     Toast.makeText(HomeActivity.this, "초기화 완료", Toast.LENGTH_SHORT).show();
 

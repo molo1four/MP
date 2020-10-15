@@ -34,7 +34,6 @@ public class SignUpActivity extends AppCompatActivity {
     EditText editEmail;
     EditText editPw;
     EditText editPw2;
-    CheckBox checkBox;
     Button btnDo_SignUp;
 
     @Override
@@ -46,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.editEmail);
         editPw = findViewById(R.id.editPw);
         editPw2 = findViewById(R.id.editPw2);
-        checkBox = findViewById(R.id.checkBox_Signup);
+
         btnDo_SignUp = findViewById(R.id.btnDo_SignuUp);
 
         btnDo_SignUp.setOnClickListener(new View.OnClickListener() {

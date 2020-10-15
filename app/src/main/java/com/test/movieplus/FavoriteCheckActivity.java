@@ -46,7 +46,8 @@ public class FavoriteCheckActivity extends AppCompatActivity {
     int offset = 0;
     int limit = 25;
     int cnt ;
-
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     String url ;
 
@@ -59,6 +60,7 @@ public class FavoriteCheckActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteCheckActivity.this));
+
 
         requestQueue = Volley.newRequestQueue(FavoriteCheckActivity.this);
 
@@ -89,6 +91,10 @@ public class FavoriteCheckActivity extends AppCompatActivity {
                 }
                 // volloey로 api 송신
                 saveMovieLikes();
+                sp = getSharedPreferences(Utils.PREFERENCES_NAME,MODE_PRIVATE);
+                editor = sp.edit();
+                editor.putBoolean("checkdone",true);
+                editor.apply();
                 Intent i = new Intent(FavoriteCheckActivity.this, HomeActivity.class);
                 // HomeActivity 실행
                 startActivity(i);

@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,6 +27,7 @@ import com.test.movieplus.model.Movies;
 import com.test.movieplus.utils.Utils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -71,9 +74,10 @@ public class ThirdFragment extends Fragment {
 
     RequestQueue requestQueue;
     ArrayList<Movies> moviesArrayList = new ArrayList<>();
+    JSONArray jsonArray = new JSONArray(); // 좋아요를 누른 영화 목록을 저장하는 어레
     RecyclerView recyclerView;  // 메인 화면에 있는 리사이클러 뷰
     RecyclerViewAdapter recyclerViewAdapter;    // 우리가 만든, 하나의 셀을 연결시키는 어댑터
-
+    Button btnSave_f3;
     int offset = 0;
     int limit = 25;
     int cnt ;
@@ -94,6 +98,7 @@ public class ThirdFragment extends Fragment {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_third,container,false);
 
         recyclerView = rootView.findViewById(R.id.recyclerView_Liked);
+        btnSave_f3 = rootView.findViewById(R.id.btnSave_f3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         requestQueue = Volley.newRequestQueue(getActivity());
@@ -101,6 +106,90 @@ public class ThirdFragment extends Fragment {
         url=Utils.BASE_URL + Utils.PATH_GETLIKED+"/?offset=" + offset+ "&limit=" + limit;
         addNetworkData(url,offset);
 
+        btnSave_f3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerViewAdapter.getMoviesArrayList();
+                Log.i("777","check");
+                for(int i = 0; moviesArrayList.size()>i; i++){
+                    Movies movies = moviesArrayList.get(i);
+                    if( movies.isChecked() == false){
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("movie_id",movies.getId());
+                            jsonArray.put(jsonObject);
+                            Log.i("777",""+jsonArray);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+                // volloey로 api 송신
+                saveMovieLikes();
+                moviesArrayList.clear();
+
+            }
+
+            private void saveMovieLikes() {
+                JSONObject body = new JSONObject();
+                try {
+                    body.put("movie_id", jsonArray);
+                    Log.i("바디체크",""+body);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                requestQueue = Volley.newRequestQueue(getActivity());
+
+                JsonObjectRequest request = new JsonObjectRequest(
+                        Request.Method.POST,
+                        Utils.BASE_URL + Utils.PATH_LIKEDELETE,
+                        body,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                boolean success = false;
+                                Log.i("AAA",response.toString());
+                                try{
+                                    success = response.getBoolean("success");
+                                    if(success == false){
+                                        Toast.makeText(getActivity(),"처리실패",Toast.LENGTH_LONG).show();
+                                    }else {
+                                        addNetworkData(url, offset);
+                                        Toast.makeText(getActivity(), "초기화 완료", Toast.LENGTH_SHORT).show();
+                                    }
+
+
+                                }catch (Exception e){
+                                    Log.i("error", "error" + e);
+
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("aaa",error.toString());
+                            }
+                        }
+                )  {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        SharedPreferences sharedPreferences =
+                                getActivity().getSharedPreferences(Utils.PREFERENCES_NAME, Context.MODE_PRIVATE);
+                        final String token = sharedPreferences.getString("token", null);
+
+                        Map<String, String> params = new HashMap<>();
+                        params.put("Authorization", "Bearer " + token);
+                        Log.i("aaa",token);
+                        return params;
+                    }
+                } ;
+                Volley.newRequestQueue(getActivity()).add(request);
+
+            }
+        });
         return  rootView;
     }
     private void addNetworkData(String url, final int offset) {

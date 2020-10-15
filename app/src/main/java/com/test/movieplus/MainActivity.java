@@ -38,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     CheckBox checkBox_autoLogin;
     Button btnLogin;
     Button btnSignUp;
+    String login_token;
+    Boolean checkdone;
+    Boolean cb;
+
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +66,23 @@ public class MainActivity extends AppCompatActivity {
         checkBox_autoLogin = findViewById(R.id.checkBox_autoLogin);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignuUp);
-
-
+        sp = getSharedPreferences(Utils.PREFERENCES_NAME,MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(MainActivity.this);
+        cb = sp.getBoolean("cb",false);
+        checkdone = sp.getBoolean("checkdone",false);
+        login_token = sp.getString("token",null);
+        Log.i("cb",""+cb);
+        editor = sp.edit();
+
+
+        if(cb){
+            if(login_token != null){
+                Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                i.putExtra("token",login_token);
+                startActivity(i);
+                finish();
+            }
+        }
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 if(email.isEmpty() || pw.isEmpty()){
                     Toast.makeText(MainActivity.this, "이메일, 비밀번호를 제대로 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
-
+                if(checkdone){
+                    Login_Home();
+                }
                 Login();
 
             }
@@ -116,12 +138,17 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                             String token = response.getString("token");
-                            SharedPreferences sp = getSharedPreferences(Utils.PREFERENCES_NAME,MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
+
                             editor.putString("token",token);
+                            if(checkBox_autoLogin.isChecked()){
+                                editor.putBoolean("cb", true);
+                            } else{
+                                editor.putBoolean("cb", false);
+                            }
                             editor.apply();
 
                             Intent i = new Intent(MainActivity.this,FavoriteCheckActivity.class);
+                            i.putExtra("token",token);
                             startActivity(i);
 //                            finish();
                         }catch (Exception e){
@@ -135,6 +162,63 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
+    private void Login_Home() {
+
+        String email = editEmail_Login.getText().toString().trim();
+        String pw = editPw_Login.getText().toString().trim();
+
+        JSONObject body = new JSONObject();
+        try{
+            body.put("email",email);
+            body.put("passwd", pw);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        requestQueue = Volley.newRequestQueue(MainActivity.this);
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.POST, Utils.BASE_URL + Utils.PATH_LOGIN, body,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.i("AAA",response.toString());
+                                try{
+                                    boolean success = response.getBoolean("success");
+                                    if(success==false){
+                                        Toast.makeText(MainActivity.this, "JSON 불러오기 실패", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    String token = response.getString("token");
+
+                                    editor.putString("token",token);
+                                    if(checkBox_autoLogin.isChecked()){
+                                        editor.putBoolean("cb", true);
+                                    } else{
+                                        editor.putBoolean("cb", false);
+                                    }
+                                    editor.apply();
+
+                                    Intent i = new Intent(MainActivity.this,HomeActivity.class);
+                                    i.putExtra("token",token);
+                                    startActivity(i);
+                            finish();
+                                }catch (Exception e){
+                                    Log.i("error", "error" + e);
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
 
         requestQueue.add(jsonObjectRequest);

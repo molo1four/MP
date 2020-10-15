@@ -47,12 +47,6 @@
         tools:layout_editor_absoluteX="49dp"
         tools:layout_editor_absoluteY="342dp" />
 
-    <CheckBox
-        android:id="@+id/checkBox_Signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="다음 로그인 시 이 계정으로  자동로그인 하겠습니다" />
-
     <Button
         android:id="@+id/btnDo_SignuUp"
         android:layout_width="match_parent"

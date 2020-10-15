@@ -1,6 +1,7 @@
 package com.test.movieplus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,6 +29,7 @@ import com.test.movieplus.model.Movies;
 import com.test.movieplus.utils.Utils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -71,9 +75,12 @@ public class SecondFragment extends Fragment {
     }
 
     RequestQueue requestQueue;
+    JSONArray jsonArray = new JSONArray(); // 좋아요를 누른 영화 목록을 저장하는 어레이
     ArrayList<Movies> moviesArrayList = new ArrayList<>();
     RecyclerView recyclerView;  // 메인 화면에 있는 리사이클러 뷰
     RecyclerViewAdapter recyclerViewAdapter;    // 우리가 만든, 하나의 셀을 연결시키는 어댑터
+
+    Button btnSave_f2;
 
     int offset = 0;
     int limit = 25;
@@ -93,20 +100,105 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_second,container,false);
-
+        moviesArrayList = new ArrayList<>();
         recyclerView = rootView.findViewById(R.id.recyclerView_movie);
+        btnSave_f2 = rootView.findViewById(R.id.btnSave_f2);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         requestQueue = Volley.newRequestQueue(getActivity());
         url = Utils.BASE_URL + Utils.PATH_GETMOVIES_NY+"/?offset=" + offset+ "&limit=" + limit;
 
-        addNetworkData(url,offset);
+        addNetworkData_save(url,offset);
+        btnSave_f2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerViewAdapter.getMoviesArrayList();
+                Log.i("777","check");
+                for(int i = 0; moviesArrayList.size()>i; i++){
+                    Movies movies = moviesArrayList.get(i);
+                    if( movies.isChecked() == true){
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("movie_id",movies.getId());
+                            jsonArray.put(jsonObject);
+                            Log.i("777",""+jsonArray);
 
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+                // volloey로 api 송신
+                saveMovieLikes();
+                jsonArray = new JSONArray();
+
+                moviesArrayList.clear();
+                //addNetworkData_save(url,offset);
+            }
+
+            private void saveMovieLikes() {
+                JSONObject body = new JSONObject();
+                try {
+                    body.put("movie_id", jsonArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                requestQueue = Volley.newRequestQueue(getActivity());
+
+                JsonObjectRequest request = new JsonObjectRequest(
+                        Request.Method.POST,
+                        Utils.BASE_URL + Utils.PATH_ADDLIKES,
+                        body,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.i("AAA",response.toString());
+                                try{
+                                    boolean success = response.getBoolean("success");
+                                    if(success==false){
+                                        Toast.makeText(getActivity(), "JSON 불러오기 실패", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }else if(success == true){
+                                        addNetworkData_save(url,offset);
+                                        Toast.makeText(getActivity(), "좋아요 목록이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }catch (Exception e){
+                                    Log.i("error", "error" + e);
+
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("aaa",error.toString());
+                            }
+                        }
+                )  {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        SharedPreferences sharedPreferences =
+                                getActivity().getSharedPreferences(Utils.PREFERENCES_NAME, Context.MODE_PRIVATE);
+                        final String token = sharedPreferences.getString("token", null);
+
+                        Map<String, String> params = new HashMap<>();
+                        params.put("Authorization", "Bearer " + token);
+                        Log.i("aaa",token);
+                        return params;
+                    }
+                } ;
+                Volley.newRequestQueue(getActivity()).add(request);
+
+            }
+        });
 
         return  rootView;
     }
 
-    private void addNetworkData(String url, final int offset) {
+    private void addNetworkData_save(String url, final int offset) {
 
 
         final JsonObjectRequest request =
@@ -124,9 +216,7 @@ public class SecondFragment extends Fragment {
                                     for(int i = 0; i< rows.length(); i++){
                                         JSONObject jsonObject = rows.getJSONObject(i);
                                         int movie_id = jsonObject.getInt("movie_id");
-                                        Log.i("AAA",""+movie_id);
                                         String title = jsonObject.getString("title");
-                                        Log.i("AAA",""+title);
                                         String year = jsonObject.getString("release_date");
                                         String photo_url = jsonObject.getString("poster_path");
                                         Movies movies = new Movies(movie_id,title,year,photo_url);
