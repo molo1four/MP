@@ -58,9 +58,6 @@ public class HomeActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(HomeActivity.this);
 
-
-
-
         navigationView = findViewById(R.id.bottomNavigationView);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
