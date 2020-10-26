@@ -56,22 +56,22 @@ public class SignUpActivity extends AppCompatActivity {
                 String pw2 = editPw2.getText().toString().trim();
 
                 if(email.isEmpty()||pw.isEmpty()||pw2.isEmpty()){
-                    Toast.makeText(SignUpActivity.this, "이메일, 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, R.string.signup_err1, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(email.contains("@") == false){
-                    Toast.makeText(SignUpActivity.this, "이메일 형식을 확인해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, R.string.signup_err2, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(pw.equals(pw2) == false){
-                    Toast.makeText(SignUpActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, R.string.signup_err3, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(pw.length() < 4 && pw2.length() < 4){
-                    Toast.makeText(SignUpActivity.this,"비밀번호는 4자 이상이여야 합니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this,R.string.signup_err4,Toast.LENGTH_SHORT).show();
                 }
                 
                 SignUp();
@@ -102,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                         try {
                             boolean success = response.getBoolean("success");
                             if (success == false) {
-                                Toast.makeText(SignUpActivity.this, "JSON 불러오기 실패", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, R.string.json_ad, Toast.LENGTH_SHORT).show();
                                 return;
                             }
 

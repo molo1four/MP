@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -66,7 +68,11 @@ public class FavoriteCheckActivity extends AppCompatActivity {
 
         url = Utils.BASE_URL + Utils.PATH_GETMOVIES+"/?offset=" + offset+ "&limit=" + limit;
         addNetworkData(url,offset);
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(FavoriteCheckActivity.this);
+        builder.setMessage(R.string.alert_message);
+        builder.setTitle(R.string.alert_title).setCancelable(false).setPositiveButton(R.string.alert_p_b, null);
+        AlertDialog alert = builder.create();
+        alert.show();
 
         //완료 버튼 눌렀을 시
         btnDone.setOnClickListener(new View.OnClickListener() {
@@ -122,10 +128,10 @@ public class FavoriteCheckActivity extends AppCompatActivity {
                                 try{
                                     boolean success = response.getBoolean("success");
                                     if(success==false){
-                                        Toast.makeText(FavoriteCheckActivity.this, "JSON 불러오기 실패", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FavoriteCheckActivity.this, R.string.json_ad, Toast.LENGTH_SHORT).show();
                                         return;
                                     }else if(success == true){
-                                        Toast.makeText(FavoriteCheckActivity.this, "좋아요 목록이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FavoriteCheckActivity.this, R.string.f_done, Toast.LENGTH_SHORT).show();
                                     }
 
                                 }catch (Exception e){

@@ -133,6 +133,14 @@ public class HomeActivity extends AppCompatActivity {
         if(id == R.id.mitem_withdrawal){
                     url = Utils.BASE_URL + Utils.PATH_WITHDRAWAL;
             addNetworkData_withdrawal(url);
+            SharedPreferences sp = getSharedPreferences(Utils.PREFERENCES_NAME,MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("token",null);
+            editor.putBoolean("cb",false);
+            editor.apply();
+            Intent i = new Intent(HomeActivity.this,MainActivity.class);
+            startActivity(i);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -148,11 +156,11 @@ public class HomeActivity extends AppCompatActivity {
                                 try{
                                     success = response.getBoolean("success");
                                         if(success == false){
-                                            Toast.makeText(HomeActivity.this,"처리실패",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(HomeActivity.this,R.string.toast_fail,Toast.LENGTH_LONG).show();
 
                                         }
 
-                                    Toast.makeText(HomeActivity.this, "로그아웃 완료", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HomeActivity.this, R.string.toast_logout, Toast.LENGTH_SHORT).show();
                                         finish();
 
                                 }catch (Exception e){
@@ -194,9 +202,9 @@ public class HomeActivity extends AppCompatActivity {
                                 try{
                                     success = response.getBoolean("success");
                                     if(success == false){
-                                        Toast.makeText(HomeActivity.this,"처리실패",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(HomeActivity.this,R.string.toast_fail,Toast.LENGTH_LONG).show();
                                     }
-                                    Toast.makeText(HomeActivity.this, "초기화 완료", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HomeActivity.this, R.string.toast_reset, Toast.LENGTH_SHORT).show();
 
                                 }catch (Exception e){
                                     Log.i("ddd",e+"");
@@ -237,11 +245,11 @@ public class HomeActivity extends AppCompatActivity {
                                 try{
                                     success = response.getBoolean("success");
                                     if(success == false){
-                                        Toast.makeText(HomeActivity.this,"처리실패",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(HomeActivity.this,R.string.toast_fail,Toast.LENGTH_LONG).show();
 
                                     }
-                                    Toast.makeText(HomeActivity.this, "초기화 완료", Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(HomeActivity.this, R.string.toast_reset, Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }catch (Exception e){
                                     Log.i("ddd",e+"");
                                 }

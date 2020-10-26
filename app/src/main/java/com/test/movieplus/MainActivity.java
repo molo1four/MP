@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 String email = editEmail_Login.getText().toString().trim();
                 String pw = editPw_Login.getText().toString().trim();
                 if(email.isEmpty() || pw.isEmpty()){
-                    Toast.makeText(MainActivity.this, "이메일, 비밀번호를 제대로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.login_err1, Toast.LENGTH_SHORT).show();
                 }
                 if(checkdone){
                     Login_Home();
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                                 try{
                                     boolean success = response.getBoolean("success");
                                     if(success==false){
-                                        Toast.makeText(MainActivity.this, "JSON 불러오기 실패", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, R.string.json_ad, Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     String token = response.getString("token");

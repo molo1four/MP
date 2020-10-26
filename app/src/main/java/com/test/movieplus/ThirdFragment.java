@@ -154,10 +154,10 @@ public class ThirdFragment extends Fragment {
                                 try{
                                     success = response.getBoolean("success");
                                     if(success == false){
-                                        Toast.makeText(getActivity(),"처리실패",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(),R.string.toast_fail,Toast.LENGTH_LONG).show();
                                     }else {
                                         addNetworkData(url, offset);
-                                        Toast.makeText(getActivity(), "초기화 완료", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), R.string.toast_reset, Toast.LENGTH_SHORT).show();
                                     }
 
 

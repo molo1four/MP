@@ -158,11 +158,11 @@ public class SecondFragment extends Fragment {
                                 try{
                                     boolean success = response.getBoolean("success");
                                     if(success==false){
-                                        Toast.makeText(getActivity(), "JSON 불러오기 실패", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), R.string.json_ad, Toast.LENGTH_SHORT).show();
                                         return;
                                     }else if(success == true){
                                         addNetworkData_save(url,offset);
-                                        Toast.makeText(getActivity(), "좋아요 목록이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), R.string.f_done, Toast.LENGTH_SHORT).show();
                                     }
 
                                 }catch (Exception e){
